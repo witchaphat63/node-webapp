@@ -14,6 +14,8 @@
 </html> 
 <!--CSS-->
 <link rel="stylesheet" href="/jquery-ui/themes/base/jquery-ui.css">
+<!--Tailwind CSS-->
+<link rel="stylesheet" href="/styles/style.css"/>
 
 <!--Javascript-->
 <script src="/jquery/jquery.min.js"></script>
@@ -45,9 +47,31 @@
       <div id="myDynamicTable"></div>
     </div>
     <div id="tabs-3">
+
+      <div class="flex justify-center">
+        <div class="rounded-lg shadow-lg bg-white max-w-sm">
+          <a href="#!">
+            <img class="rounded-t-lg" src="/images/DrSUS.png" alt=""/>
+          </a>
+          <div class="p-6">
+            <h5 class="text-gray-900 text-xl font-medium mb-2">Information</h5>
+            <p class="text-gray-700 text-base mb-4">
+            </p>
+            <div id="fname">&nbsp;</div>
+            <div id="studentid">&nbsp;</div>
+            <div id="gpa">&nbsp;</div>
+            <div id="position">&nbsp;</div>     
+            <br/>
+            <button type="button" class=" inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">Button</button>
+          </div>
+        </div>
+      </div>
     
     </div>
   </div><!-- tabs-->
+</body>
+</html>
+
 <script type="text/javascript">
     $(document).ready(function () {
        console.log("Onload");
@@ -76,7 +100,7 @@
            headers: { 
              'Content-Type': 'application/json',
              "Accepts": "application/json",
-             "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90b29scy5lY3BlLm51LmFjLnRoXC9uZXR3b3JrXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjU5MjcyNDk4LCJleHAiOjE2NTkyNzYwOTgsIm5iZiI6MTY1OTI3MjQ5OCwianRpIjoiOEtnR1BtWHB6bkV5eVNuSSIsInN1YiI6MzksInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.iZUZwVDoA5w2aJAQ16ijSCbUbj6oqUpSwnCCh0zJBz8",
+             "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90b29scy5lY3BlLm51LmFjLnRoXC9uZXR3b3JrXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjYxNzc4MzIyLCJleHAiOjE2NjE3ODE5MjIsIm5iZiI6MTY2MTc3ODMyMiwianRpIjoiZlFoQlE0YVJ6ZjNUNDRCNSIsInN1YiI6MzksInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.T_DZ4hx3JeMFINFaZZSujUrjMiKVQuXVzGeMPBNtFuA",
            },
            success: function(data){
              console.log(data);
@@ -97,7 +121,7 @@
             headers: { 
               'Content-Type': 'application/json',
               "Accepts": "application/json",
-              "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90b29scy5lY3BlLm51LmFjLnRoXC9uZXR3b3JrXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjU5MjcyNDk4LCJleHAiOjE2NTkyNzYwOTgsIm5iZiI6MTY1OTI3MjQ5OCwianRpIjoiOEtnR1BtWHB6bkV5eVNuSSIsInN1YiI6MzksInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.iZUZwVDoA5w2aJAQ16ijSCbUbj6oqUpSwnCCh0zJBz8",
+              
             },
             data:JSON.stringify( { "name": $('#txtName').val(), "student_id": $('#txtStudentID').val(), "email": $('#txtEmail').val(), "password": $('#txtPassword').val() } ),
             success: function(data){
@@ -110,7 +134,6 @@
 
   });
 </script>
-
 <script type="text/javascript">
 
   var TableBackgroundMouseoverColor = "#b8663d";
@@ -173,7 +196,7 @@
     if(i%2==0){
       color="#F1E2E2"; // result%2 != 0
     }else{
-        color="#DDD3B3";
+       color="#DDD3B3";
     }
     idItem=(i+1);
     //--------cell 1
@@ -233,11 +256,11 @@
         elementButtonSave.id = "btnConfirm"+idItem;
         elementButtonSave.value = "รายละเอียด";
       //elementStartDate.setAttribute("width","80");
-        // elementButtonSave.setAttribute("style","width:50px;");
+       // elementButtonSave.setAttribute("style","width:50px;");
         //elementButtonSave.setAttribute("class","tealA400");
         
-        
-        elementButtonSave.setAttribute("onclick","popupConfirm('"+items[i].fullname+"',this)");
+       
+        elementButtonSave.setAttribute("onclick","confirmAlert('"+items[i].student_id+"',this)");
         
 
         cell5.appendChild(elementButtonSave);
@@ -251,7 +274,29 @@
     myTableDiv.appendChild(table);
   }
 
-  function popupConfirm(fullname,objElement){
-    alert(fullname);
+  function confirmAlert(id){
+    console.log(id)
+    
+    $.ajax({
+         method: "GET",
+         url: "https://tools.ecpe.nu.ac.th/network/api/student/"+id,
+         dataType : 'json',
+         headers: { 
+           'Content-Type': 'application/json',
+           "Accepts": "application/json",
+           "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90b29scy5lY3BlLm51LmFjLnRoXC9uZXR3b3JrXC9hcGlcL2xvZ2luIiwiaWF0IjoxNjYxNzc4MzIyLCJleHAiOjE2NjE3ODE5MjIsIm5iZiI6MTY2MTc3ODMyMiwianRpIjoiZlFoQlE0YVJ6ZjNUNDRCNSIsInN1YiI6MzksInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.T_DZ4hx3JeMFINFaZZSujUrjMiKVQuXVzGeMPBNtFuA",
+         },
+         success: function(data){
+           console.log(data);
+           $("#tabs").tabs("option","active",2);
+            $("#fname").text(data[0].fullname);
+            $("#studentid").text(data[0].student_id);
+            $("#gpa").text(data[0].gpa);
+            $("#position").text(data[0].position);
+           //var tbName ="myDynamicTable";
+           //addTable(data,tbName);
+
+           //alert("Done");
+         }
+       });
   }
-</script>
